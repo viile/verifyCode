@@ -1,0 +1,10 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"collie": "0.9.3",
+		"hunt": "0.6.0-beta2",
+		"libmemcached": "1.0.2",
+		"openssl": "1.1.5+1.0.1g",
+		"tinyredis": "2.1.1"
+	}
+}

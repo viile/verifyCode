@@ -1,0 +1,3 @@
+GET / index.homePage
+GET /verify index.verification
+POST /verify index.verify
