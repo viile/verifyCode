@@ -24,11 +24,13 @@ class IndexController : BaseController
 
 	@Action void verification()
 	{
+		auto identity = req.get("identity");
 		auto token = req.getCookieValue("token");
 		string codeNum;
 		auto verifi = new Verify();
 		string verfication = verifi.createVerification(codeNum);
 		memcache.set(token,codeNum.toUpper,300);
+		memcache.set(identity,codeNum.toUpper,300);
 		log(token,codeNum);
 		res.setHeader("Content-Type","image/gif");
 		res.setContext(verfication);
