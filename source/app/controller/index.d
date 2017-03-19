@@ -22,27 +22,39 @@ class IndexController : BaseController
 		successJson();
 	}
 
-	@Action void verification()
+	@Action void verifyGet()
 	{
 		auto identity = req.get("identity");
-		auto token = req.getCookieValue("token");
-		string codeNum;
+		string code;
 		auto verifi = new Verify();
-		string verfication = verifi.createVerification(codeNum);
-		memcache.set(token,codeNum.toUpper,300);
-		memcache.set(identity,codeNum.toUpper,300);
-		log(token,codeNum);
+		string verfication = verifi.createVerification(code);
+		memcache.set(identity,code.toUpper,300);
+		log("identity : ",identity," code : ",code);
+		res.setHeader("Content-Type","image/gif");
+		res.setContext(verfication);
+	}
+	@Action void verifyPost()
+	{
+		auto identity = req.post("identity");
+		string code;
+		auto verifi = new Verify();
+		string verfication = verifi.createVerification(code);
+		memcache.set(identity,code.toUpper,300);
+		log("identity : ",identity," code : ",code);
 		res.setHeader("Content-Type","image/gif");
 		res.setContext(verfication);
 	}
 
-	@Action void verify()
+	@Action void check()
 	{
-		auto token = req.post("token");
+		auto identity = req.post("identity");
 		auto code = req.post("code");
 
-		if(code.toUpper == memcache.get(token)){
-			memcache.del(token);
+		string cache = memcache.get(identity);
+		log("identity : ",identity," code : ",code," cache : ",cache);
+
+		if(code.toUpper == cache){
+			memcache.del(identity);
 			successJson();
 			return;
 		}

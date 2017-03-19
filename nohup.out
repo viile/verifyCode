@@ -1,0 +1,12 @@
+2017-03-20T00:06:23.309:httpserver.d:addBind:93 false
+2017-03-20T00:06:23.311:config.d:parseToFullController:163 output: app.controller.index.IndexController.homePage
+2017-03-20T00:06:23.311:config.d:parseToFullController:163 output: app.controller.index.IndexController.verifyGet
+2017-03-20T00:06:23.311:config.d:parseToFullController:163 output: app.controller.index.IndexController.verifyPost
+2017-03-20T00:06:23.311:config.d:parseToFullController:163 output: app.controller.index.IndexController.check
+2017-03-20T00:06:23.312:routergroup.d:addRoute:59 add Route!  domain :    method: GET	 path: /
+2017-03-20T00:06:23.312:routergroup.d:addRoute:59 add Route!  domain :    method: GET	 path: /verify
+2017-03-20T00:06:23.312:routergroup.d:addRoute:59 add Route!  domain :    method: POST	 path: /verify
+2017-03-20T00:06:23.312:routergroup.d:addRoute:59 add Route!  domain :    method: POST	 path: /check
+2017-03-20T00:06:23.312:httpserver.d:start:101 start false
+2017-03-20T00:06:23.312:httpserver.d:start:106 start listen ---
+2017-03-20T00:06:23.312:httpserver.d:start:106 start listen ---
