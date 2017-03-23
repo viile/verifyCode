@@ -13,6 +13,7 @@ import app.service;
 class IndexController : BaseController 
 {
 	mixin MakeController;
+	mixin getParams;
 	this()
 	{
 	}
@@ -22,24 +23,13 @@ class IndexController : BaseController
 		successJson();
 	}
 
-	@Action void verifyGet()
+	@Action void verify()
 	{
 		auto identity = req.get("identity");
 		string code;
 		auto verifi = new Verify();
 		string verfication = verifi.createVerification(code);
-		memcache.set(identity,code.toUpper,300);
-		log("identity : ",identity," code : ",code);
-		res.setHeader("Content-Type","image/gif");
-		res.setContext(verfication);
-	}
-	@Action void verifyPost()
-	{
-		auto identity = req.post("identity");
-		string code;
-		auto verifi = new Verify();
-		string verfication = verifi.createVerification(code);
-		memcache.set(identity,code.toUpper,300);
+		memcache.set("VERIFY_IMG_"~identity,code.toUpper,300);
 		log("identity : ",identity," code : ",code);
 		res.setHeader("Content-Type","image/gif");
 		res.setContext(verfication);
@@ -47,12 +37,10 @@ class IndexController : BaseController
 
 	@Action void check()
 	{
-		auto identity = req.post("identity");
-		auto code = req.post("code");
-
-		string cache = memcache.get(identity);
+		auto identity = getParam("identity");
+		auto code = getParam("code");
+		string cache = memcache.get("VERIFY_IMG_"~identity);
 		log("identity : ",identity," code : ",code," cache : ",cache);
-
 		if(code.toUpper == cache){
 			memcache.del(identity);
 			successJson();

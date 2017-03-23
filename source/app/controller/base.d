@@ -118,4 +118,38 @@ class BaseController : Controller
 		}
 	}
 
+	string getBody(Request req)
+	{
+		req.Body.rest(0);
+		ubyte[] reqBody;
+		req.Body.readAll((in ubyte[] data){
+				reqBody ~= data;
+				trace("length : ", data.length,cast(string)data);
+				});
+		return cast(string)reqBody;
+	}
+
+
+}
+
+mixin template getParams()
+{
+	JSONValue _body = JSONValue.init;
+	JSONValue jsonBody()
+	{
+		if(_body == JSONValue.init)
+			_body= parseJSON(getBody(req));
+		return _body;
+	}
+	bool jsonBody(string key)
+	{
+		if(req.method != "POST")return false;
+		if(key in jsonBody)return true;
+		return false;
+	}
+	string getParam(string key)
+	{
+		if(jsonBody(key))return _body[key].str;
+		return req.get(key);
+	}
 }

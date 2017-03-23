@@ -1,4 +1,4 @@
 GET / index.homePage
-GET /verify index.verifyGet
-POST /verify index.verifyPost
+GET /verify index.verify
+
 POST /check index.check
